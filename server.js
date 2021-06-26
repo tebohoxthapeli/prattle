@@ -8,7 +8,7 @@ const io = socketio(server);
 
 const formatMessage = require('./utils/messages');
 const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require('./utils/users');
-const botName = 'Prattler';
+const botName = 'Prattler (This is a bot)';
 const PORT = 3000 || process.env.PORT;
 
 const path = require('path');
@@ -21,13 +21,14 @@ io.on('connection', socket => {
 
         const user = userJoin(socket.id, username, room);
 
+        // join a room
         socket.join(user.room);
 
         // welcome current user
-        socket.emit('message', formatMessage(botName, `Joined room: ${user.room}`));
+        socket.emit('message', formatMessage(botName, `Joined room: ${user.room}`), 'admin');
 
         // broadcast when user connects (to all users exc the one connecting)
-        socket.broadcast.to(user.room).emit('message', formatMessage(botName, `${user.username} has joined the chat`));
+        socket.broadcast.to(user.room).emit('message', formatMessage(botName, `${user.username} has joined the chat`), 'admin');
 
         // send users and room info
         io.to(user.room).emit('roomUsers', {
@@ -38,19 +39,20 @@ io.on('connection', socket => {
 
     // listen for chatMessage
     socket.on('chatMessage', msg => {
-
         const user = getCurrentUser(socket.id);
 
-        io.to(user.room).emit('message', formatMessage(user.username, msg));
+        socket.emit('message', formatMessage('Me', msg), 'sent');
+        socket.broadcast.to(user.room).emit('message', formatMessage(user.username, msg), 'received');
     });
     
     // runs when client disconnects
     socket.on('disconnect', () => {
-
         const user = userLeave(socket.id);
 
         if (user) {
-            io.to(user.room).emit('message', formatMessage(botName, `${user.username} has left the chat`));
+            // io.to(user.room).emit('message', formatMessage(botName, `${user.username} has left the chat`));
+
+            socket.broadcast.to(user.room).emit('message', formatMessage(botName, `${user.username} has left the chat`), 'admin');
 
             // send users and room info
             io.to(user.room).emit('roomUsers', {
