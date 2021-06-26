@@ -1,11 +1,27 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
 
 :root {
 	--dark-color-a: #667aff;
 	--dark-color-b: #7386ff;
+	--background-light: rgb(158, 102, 37);
+	--background-dark: rgb(122, 79, 29);
+	--input-background: rgb(238, 207, 172);
+	--background-success: green;
+	--background-success-light: rgb(35, 131, 35);
+	--color-success: rgb(153, 229, 153);
+	--title-font-family: 'Cormorant Garamond', serif;
+	--title-letter-spacing: 10px;
+	--title-font-size: 25px;
+	--btn-font-family: 'Poppins', sans-serif;
+	--btn-border-radius: 20px;
 	--light-color: #e6e9ff;
 	--success-color: #5cb85c;
 	--error-color: #d9534f;
+	--radius: 0.5rem;
+	--border-style: 2px solid var(--background-dark);
 }
 
 * {
@@ -17,8 +33,9 @@
 body {
 	font-family: 'Roboto', sans-serif;
 	font-size: 16px;
-	background: var(--light-color);
-	margin: 20px;
+	background: gray;
+	height: 100vh;
+	width: 100vw;
 }
 
 ul {
@@ -129,26 +146,35 @@ a {
 
 /* Join Page */
 .join-container {
-	max-width: 500px;
-	margin: 80px auto;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	color: #fff;
+}
+
+.join-container > div {
+	width: 100%;
+	max-width: 500px;
 }
 
 .join-header {
 	text-align: center;
 	padding: 20px;
-	background: var(--dark-color-a);
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+	background: var(--background-dark);
+	border-top-left-radius: var(--radius);
+	border-top-right-radius: var(--radius);
+	font-family: 'Cormorant Garamond', serif;
+	letter-spacing: 10px;
+	font-size: var(--title-font-size);
 }
 
 .join-main {
 	padding: 30px 40px;
-	background: var(--dark-color-b);
-}
-
-.join-main p {
-	margin-bottom: 20px;
+	background: linear-gradient(180deg, var(--background-light), var(--input-background));
+	border-bottom-left-radius: var(--radius);
+	border-bottom-right-radius: var(--radius);
 }
 
 .join-main .form-control {
@@ -158,6 +184,7 @@ a {
 .join-main label {
 	display: block;
 	margin-bottom: 5px;
+	font-size: 20px;
 }
 
 .join-main input[type='text'] {
@@ -165,6 +192,8 @@ a {
 	padding: 5px;
 	height: 40px;
 	width: 100%;
+	border-radius: var(--radius);
+	border: var(--border-style);
 }
 
 .join-main select {
@@ -172,11 +201,36 @@ a {
 	padding: 5px;
 	height: 40px;
 	width: 100%;
+	border-radius: var(--radius);
+	border: var(--border-style);
+}
+
+.join-main input[type='text'],
+.join-main select {
+	background: var(--input-background);
+	outline: none;
+}
+
+.join-main input[type='text']:focus,
+.join-main select:focus {
+	background: white;
 }
 
 .join-main .btn {
 	margin-top: 20px;
 	width: 100%;
+	border-radius: var(--btn-border-radius);
+	background: var(--background-success);
+	color: var(--color-success);
+	font-family: var(--btn-font-family);
+	border: 2px solid var(--background-success);
+}
+
+.join-main .btn:hover,
+.join-main .btn:focus {
+	background: var(--background-success-light);
+	color: white;
+	border: 2px solid white;
 }
 
 @media (max-width: 700px) {
