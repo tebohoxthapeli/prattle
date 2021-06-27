@@ -133,6 +133,23 @@ a {
 	margin-bottom: 15px;
 	border-radius: 5px;
 	overflow-wrap: break-word;
+	position: relative;
+}
+
+.chat-messages button {
+	font-size: 20px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: rgb(250, 127, 127);
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
+
+.chat-messages button:hover,
+.chat-messages button:focus {
+	color: rgb(247, 33, 33);
 }
 
 .chat-messages .message .meta {
@@ -146,12 +163,8 @@ a {
 	background: rgb(78, 77, 77);
 }
 
-.other-name {
-	color: rgb(18, 224, 18);
-}
-
-.other-time {
-	color: orange;
+.received-bg {
+	background: var(--background-dark);
 }
 
 .sent-bg {
@@ -162,16 +175,24 @@ a {
 	color:aqua;
 }
 
-.sent-time {
-	color:chartreuse;
+.received-name {
+	color: rgb(18, 224, 18);
 }
 
-.received-bg {
-	background: var(--background-dark);
+.other-time {
+	color: orange;
 }
 
 .text {
 	color: white;
+}
+
+.admin-font-style {
+	font-style: italic;	
+}
+
+.admin-color {
+	color: #ccc;
 }
 
 .chat-form-container {
@@ -191,7 +212,7 @@ a {
 	border-bottom-right-radius: 0;
 	border-color: transparent;
 	font-size: 16px;
-	padding: 5px;
+	padding: 10px;
 	height: 40px;
 	width: 100%;
 	background: var(--input-background);

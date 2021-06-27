@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // run when client connects
 io.on('connection', socket => {
+    let count = 0;
 
     socket.on('joinRoom', ({ username, room }) => {
 
@@ -40,9 +41,23 @@ io.on('connection', socket => {
     // listen for chatMessage
     socket.on('chatMessage', msg => {
         const user = getCurrentUser(socket.id);
+        count++;
+        const msgID = `${user.id}` + `${count}`;
 
-        socket.emit('message', formatMessage('Me', msg), 'sent');
-        socket.broadcast.to(user.room).emit('message', formatMessage(user.username, msg), 'received');
+        socket.emit('message', formatMessage('Me', msg), 'sent', msgID);
+        socket.broadcast.to(user.room).emit('message', formatMessage(user.username, msg), 'received', msgID);
+    });
+
+    // listen for deletion
+    socket.on('deleteMessage', msgID => {
+        const user = getCurrentUser(socket.id);
+
+        if (user) {
+            io.to(user.room).emit('delete', { 
+                user: user.username,
+                id: msgID
+             });
+        }
     });
     
     // runs when client disconnects
