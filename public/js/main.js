@@ -17,15 +17,19 @@ textInput.focus();
 // join chatroom
 socket.emit('joinRoom', { username, room });
 
-// get room and Users
-socket.on('roomUsers', ({ room, users }) => {
+// get room
+socket.on('roomInfo', room => {
     outputRoomName(room);
+});
+
+// get users
+socket.on('roomUsers', users => {
     outputUsers(users);
 });
 
 // message from server
-socket.on('message', (message, sendStatus, msgID) => {
-    outputMessage(message, sendStatus, msgID);
+socket.on('message', ({ msg, sendStatus, msgID }) => {
+    outputMessage(msg, sendStatus, msgID);
 
     // scroll down
     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -113,8 +117,8 @@ function addDeleteEvent (deleteBtn, msgID) {
 }
 
 // delete the message
-socket.on('delete', ({ user, id }) => {
-    const message = document.getElementById(id);
+socket.on('delete', ({ user, msgID }) => {
+    const message = document.getElementById(msgID);
 
     if (user === username) {
         chatMessages.removeChild(message);
