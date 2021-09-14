@@ -1,3 +1,13 @@
+if (process.env.NODE_ENV !== 'production') {
+    const dotenv = require('dotenv')
+    const dotenvParseVariables = require('dotenv-parse-variables')
+
+    let env = dotenv.config({})
+    if (env.error) throw env.error
+    env = dotenvParseVariables(env.parsed)
+ 
+}
+
 const express = require('express');
 const http = require('http');
 
